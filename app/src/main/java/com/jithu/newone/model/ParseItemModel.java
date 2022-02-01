@@ -1,7 +1,7 @@
 package com.jithu.newone.model;
 
 public class ParseItemModel {
-    String name,rating,close;
+    String name,rating,close,direction;
 
     public ParseItemModel(String name, String rating) {
         this.name = name;
@@ -37,6 +37,14 @@ public class ParseItemModel {
 
     public void setClose(String close) {
         this.close = close;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }
 

@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPreExecute();
 
+            Log.i(TAG, "onPostExecute: ");
+
+            for (int i = 0; i < parseItemModelList.size(); i++) {
+                Log.i(TAG, parseItemModelList.get(i).getDirection());
+            }
+
+
             parseItemAdapter.notifyDataSetChanged();
         }
 
@@ -51,19 +58,25 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String url="https://www.google.com/search?q=petrol%20pump&biw=982&bih=754&tbm=lcl&sxsrf=APq-WBurzW9atv_DwnEr_oB4fHcNRDkDaA%3A1643697433252&ei=GdX4YcTxDvKC4-EPxIu06AI&oq=petrol+p&gs_l=psy-ab.1.0.0i433i67k1j0i512i433i457k1j0i512i433k1j0i512k1j0i512i433k1j0i67k1j0i512k1j0i512i433k1l2j0i512k1.363302.363834.0.365510.3.3.0.0.0.0.209.333.0j1j1.2.0....0...1c.1.64.psy-ab..1.2.332....0.ri2VCNUYTkg&tbs=lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!1m4!1u16!2m2!16m1!1e1!1m4!1u16!2m2!16m1!1e2!2m1!1e2!2m1!1e16!2m1!1e3!3sIAE,lf:1,lf_ui:2&rlst=f#rlfi=hd:;si:;mv:[[8.904745700000001,76.6090775],[8.8782559,76.5604994]];tbs:lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!1m4!1u16!2m2!16m1!1e1!1m4!1u16!2m2!16m1!1e2!2m1!1e2!2m1!1e16!2m1!1e3!3sIAE,lf:1,lf_ui:2";
                 document= Jsoup.connect(url).get();
-                data=document.select("div.rllt__details");
-//                Log.e(TAG, "Get Data: "+data.toString() );
+                data=document.select("div.rlfl__tls > div");
+
                 Log.i(TAG, "doInBackground: Hellooo");
 
                 int size=data.size();
+                if (size > 6){
+                    size = 6;
+                }
                 for (int i =0; i <size; i++){
-                    Element s = data.get(i);
-//                    hii
+                    Element s = data.select("div.rllt__details").get(i);
+
                     String name = s.select("div.dbg0pd > span").text();
                     String rating = s.select("span.MvDXgc").text();
                     String status = s.select("div").last().text();
 
-                    parseItemModelList.add(new ParseItemModel(name,rating,status));
+                    String dir = data.select("div.VkpGBb > a.yYlJEf").attr("data-url");
+                    ParseItemModel temp = new ParseItemModel(name, rating, status);
+                    temp.setDirection(dir);
+                    parseItemModelList.add(temp);
                 }
 
             } catch (Exception e) {

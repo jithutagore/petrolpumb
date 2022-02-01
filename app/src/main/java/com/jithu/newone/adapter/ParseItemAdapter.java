@@ -1,11 +1,14 @@
 package com.jithu.newone.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +43,15 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
         holder.rating.setText(parseItemModel.getRating());
         holder.close.setText(parseItemModel.getClose());
 
+        holder.dir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String u = "http://www.google.com" + parseItemModel.getDirection();
+                Uri uri = Uri.parse(u);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                view.getContext().startActivity(intent);
+            }
+        });
         Log.e("TAG", "onBindViewHolder: "+parseItemModelArrayList.toString() );
     }
 
@@ -49,12 +61,13 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name,rating,distance,close;
+        TextView name,rating,distance,close,dir;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
             rating=itemView.findViewById(R.id.rate_value);
             close=itemView.findViewById(R.id.close);
+            dir=itemView.findViewById(R.id.dir);
         }
 
         @Override
