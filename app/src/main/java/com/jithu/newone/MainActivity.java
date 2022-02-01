@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 int size=data.size();
                 for (int i =0; i <size; i++){
                     Element s = data.get(i);
+//                    hii
                     String name = s.select("div.dbg0pd > span").text();
                     String rating = s.select("span.MvDXgc").text();
                     String status = s.select("div").last().text();
