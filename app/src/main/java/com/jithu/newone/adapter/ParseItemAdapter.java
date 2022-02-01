@@ -39,11 +39,16 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
     @Override
     public void onBindViewHolder(@NonNull @NotNull ParseItemAdapter.ViewHolder holder, int position) {
         ParseItemModel parseItemModel = parseItemModelArrayList.get(position);
-        holder.name.setText(parseItemModel.getName());
-        holder.rating.setText(parseItemModel.getRating());
-        holder.close.setText(parseItemModel.getClose());
+        try{
+            holder.name.setText(parseItemModel.getName());
+            holder.rating.setText(parseItemModel.getRating());
+            holder.close.setText(parseItemModel.getClose());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        holder.dir.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String u = "http://www.google.com" + parseItemModel.getDirection();
@@ -61,13 +66,13 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name,rating,distance,close,dir;
+        TextView name,rating,close;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
             rating=itemView.findViewById(R.id.rate_value);
             close=itemView.findViewById(R.id.close);
-            dir=itemView.findViewById(R.id.dir);
+
         }
 
         @Override

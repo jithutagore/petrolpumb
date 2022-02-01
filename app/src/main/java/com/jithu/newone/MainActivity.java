@@ -1,11 +1,23 @@
 package com.jithu.newone;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jithu.newone.adapter.ParseItemAdapter;
 import com.jithu.newone.model.ParseItemModel;
@@ -24,18 +36,69 @@ public class MainActivity extends AppCompatActivity {
     private ParseItemAdapter parseItemAdapter;
     private final List<ParseItemModel> parseItemModelList = new ArrayList<>();
     Elements data;
+    Elements data1;
     Document document;
+    Document document1;
+    LocationManager locationManager;
+    String latitude, longitude;
+    private static final int REQUEST_LOCATION = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.recyclerView_id);
-        parseItemAdapter = new ParseItemAdapter((ArrayList<ParseItemModel>) parseItemModelList, this);
-        recyclerView.setAdapter(parseItemAdapter);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            OnGPS();
+        } else {
+            getLocation();
+            recyclerView = findViewById(R.id.recyclerView_id);
+            parseItemAdapter = new ParseItemAdapter((ArrayList<ParseItemModel>) parseItemModelList, this);
+            recyclerView.setAdapter(parseItemAdapter);
 
-        Content content= new Content();
-        content.execute();
+            Content content= new Content();
+            content.execute();
+        }
+
+
+    }
+    //
+    private void OnGPS() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        } else {
+            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (locationGPS != null) {
+                double lat = locationGPS.getLatitude();
+                double longi = locationGPS.getLongitude();
+                latitude = String.format("%.6f",lat);
+
+                longitude = String.format("%.6f",longi);
+                System.out.println(latitude+"jithu"+longitude);
+
+            } else {
+                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     private class Content extends AsyncTask<Void,Void,Void> {
 
@@ -56,11 +119,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                String url="https://www.google.com/search?q=petrol%20pump&biw=982&bih=754&tbm=lcl&sxsrf=APq-WBurzW9atv_DwnEr_oB4fHcNRDkDaA%3A1643697433252&ei=GdX4YcTxDvKC4-EPxIu06AI&oq=petrol+p&gs_l=psy-ab.1.0.0i433i67k1j0i512i433i457k1j0i512i433k1j0i512k1j0i512i433k1j0i67k1j0i512k1j0i512i433k1l2j0i512k1.363302.363834.0.365510.3.3.0.0.0.0.209.333.0j1j1.2.0....0...1c.1.64.psy-ab..1.2.332....0.ri2VCNUYTkg&tbs=lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!1m4!1u16!2m2!16m1!1e1!1m4!1u16!2m2!16m1!1e2!2m1!1e2!2m1!1e16!2m1!1e3!3sIAE,lf:1,lf_ui:2&rlst=f#rlfi=hd:;si:;mv:[[8.904745700000001,76.6090775],[8.8782559,76.5604994]];tbs:lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!1m4!1u16!2m2!16m1!1e1!1m4!1u16!2m2!16m1!1e2!2m1!1e2!2m1!1e16!2m1!1e3!3sIAE,lf:1,lf_ui:2";
+                String url="https://www.google.com/search?sa=X&tbs=lf:1,lf_ui:2&tbm=lcl&sxsrf=APq-WBufXpN-a-he8l0yFq69GAj0skrzDQ:1643697379859&q=petrol+pump&rflfq=1&num=10&ved=2ahUKEwj81";
+                String url1="https://www.google.com/search?q=petrol+pump+near+me&oq=petrol+pump+near+me";
+                System.out.println("https://www.google.com/maps/search/petrol+pumb+near+me/"+latitude+"+"+longitude);
                 document= Jsoup.connect(url).get();
+                document1= Jsoup.connect(url1).get();
                 data=document.select("div.rlfl__tls > div");
+                data1=document1.select("div.rllt__details");
+                System.out.println("read");
+                System.out.println(data1);
+                System.out.println("stop");
 
-                Log.i(TAG, "doInBackground: Hellooo");
+
+                Log.e(TAG, "doInBackground: Hellooo"+data.toString());
 
                 int size=data.size();
                 if (size > 6){
@@ -74,8 +145,9 @@ public class MainActivity extends AppCompatActivity {
                     String status = s.select("div").last().text();
 
                     String dir = data.select("div.VkpGBb > a.yYlJEf").attr("data-url");
-                    ParseItemModel temp = new ParseItemModel(name, rating, status);
-                    temp.setDirection(dir);
+                    String dir1 = data1.select("div.VkpGBb > a.yYlJEf").attr("data-url");
+                    System.out.println("http://www.google.com"+dir1);
+                    ParseItemModel temp = new ParseItemModel(name, rating, status,dir);
                     parseItemModelList.add(temp);
                 }
 

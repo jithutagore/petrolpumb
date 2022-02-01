@@ -3,16 +3,13 @@ package com.jithu.newone.model;
 public class ParseItemModel {
     String name,rating,close,direction;
 
-    public ParseItemModel(String name, String rating) {
-        this.name = name;
-        this.rating = rating;
 
-    }
 
-    public ParseItemModel(String name, String rating, String close) {
+    public ParseItemModel(String name, String rating, String close,String direction) {
         this.name = name;
         this.rating = rating;
         this.close = close;
+        this.direction=direction;
     }
 
     public String getName() {
