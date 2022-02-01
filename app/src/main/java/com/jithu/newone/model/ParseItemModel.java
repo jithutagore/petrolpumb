@@ -9,6 +9,12 @@ public class ParseItemModel {
 
     }
 
+    public ParseItemModel(String name, String rating, String close) {
+        this.name = name;
+        this.rating = rating;
+        this.close = close;
+    }
+
     public String getName() {
         return name;
     }
