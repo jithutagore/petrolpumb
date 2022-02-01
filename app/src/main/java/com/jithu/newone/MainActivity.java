@@ -119,34 +119,31 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                String url="https://www.google.com/search?sa=X&tbs=lf:1,lf_ui:2&tbm=lcl&sxsrf=APq-WBufXpN-a-he8l0yFq69GAj0skrzDQ:1643697379859&q=petrol+pump&rflfq=1&num=10&ved=2ahUKEwj81";
-                String url1="https://www.google.com/search?q=petrol+pump+near+me&oq=petrol+pump+near+me";
-                System.out.println("https://www.google.com/maps/search/petrol+pumb+near+me/"+latitude+"+"+longitude);
+                String url="https://www.google.com/search?q=petrol+pump&tbm=lcl";
                 document= Jsoup.connect(url).get();
-                document1= Jsoup.connect(url1).get();
                 data=document.select("div.rlfl__tls > div");
-                data1=document1.select("div.rllt__details");
-                System.out.println("read");
-                System.out.println(data1);
-                System.out.println("stop");
 
-
-                Log.e(TAG, "doInBackground: Hellooo"+data.toString());
 
                 int size=data.size();
+
                 if (size > 6){
                     size = 6;
                 }
                 for (int i =0; i <size; i++){
-                    Element s = data.select("div.rllt__details").get(i);
+
+                    Element a = data.select("div.uMdZh").get(i);
+                    Element s = a.select("div.rllt__details").first();
+
+                    Log.i(TAG, s.toString());
 
                     String name = s.select("div.dbg0pd > span").text();
+
                     String rating = s.select("span.MvDXgc").text();
                     String status = s.select("div").last().text();
 
-                    String dir = data.select("div.VkpGBb > a.yYlJEf").attr("data-url");
-                    String dir1 = data1.select("div.VkpGBb > a.yYlJEf").attr("data-url");
-                    System.out.println("http://www.google.com"+dir1);
+                    String dir = a.select("div.VkpGBb > a.yYlJEf").attr("data-url");
+
+                    Log.i(TAG, "dir: " + dir);
                     ParseItemModel temp = new ParseItemModel(name, rating, status,dir);
                     parseItemModelList.add(temp);
                 }

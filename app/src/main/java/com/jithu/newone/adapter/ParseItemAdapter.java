@@ -3,12 +3,10 @@ package com.jithu.newone.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,9 +54,7 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 view.getContext().startActivity(intent);
             }
-        });
-        Log.e("TAG", "onBindViewHolder: "+parseItemModelArrayList.toString() );
-    }
+        }); }
 
     @Override
     public int getItemCount() {
