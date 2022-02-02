@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jithu.newone.adapter.ParseItemAdapter;
@@ -86,16 +87,22 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
+            System.out.println("1");
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            System.out.println("2");
             if (locationGPS != null) {
+
                 double lat = locationGPS.getLatitude();
                 double longi = locationGPS.getLongitude();
-                latitude = String.format("%.6f",lat);
+                latitude = Double.toString(lat);
 
-                longitude = String.format("%.6f",longi);
+
+                longitude = Double.toString(longi);
                 System.out.println(latitude+"jithu"+longitude);
+                System.out.println("3");
 
             } else {
+                System.out.println("4");
                 Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -120,8 +127,12 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 String url="https://www.google.com/search?q=petrol+pump&tbm=lcl";
+                String url1="https://www.google.com/search?q=petrol+pump+"+latitude+"+"+longitude+"&tbm=lcl";
+                System.out.println(url1);
                 document= Jsoup.connect(url).get();
+                document1= Jsoup.connect(url1).get();
                 data=document.select("div.rlfl__tls > div");
+                data1=document1.select("div.rlfl__tls > div");
 
 
                 int size=data.size();
@@ -131,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 for (int i =0; i <size; i++){
 
-                    Element a = data.select("div.uMdZh").get(i);
+                    Element a = data1.select("div.uMdZh").get(i);
                     Element s = a.select("div.rllt__details").first();
 
                     Log.i(TAG, s.toString());
@@ -142,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     String status = s.select("div").last().text();
 
                     String dir = a.select("div.VkpGBb > a.yYlJEf").attr("data-url");
+
 
                     Log.i(TAG, "dir: " + dir);
                     ParseItemModel temp = new ParseItemModel(name, rating, status,dir);

@@ -47,6 +47,14 @@
         android:textSize="18sp"
         android:id="@+id/close"
        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="direction"
+        android:textSize="18sp"
+        android:id="@+id/direction"
+        android:textColor="@color/black"
+        android:layout_gravity="right"/>
 
 
 

@@ -46,7 +46,7 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
         }
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.direction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String u = "http://www.google.com" + parseItemModel.getDirection();
@@ -62,12 +62,13 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name,rating,close;
+        TextView name,rating,close,direction;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
             rating=itemView.findViewById(R.id.rate_value);
             close=itemView.findViewById(R.id.close);
+            direction=itemView.findViewById(R.id.direction);
 
         }
 
