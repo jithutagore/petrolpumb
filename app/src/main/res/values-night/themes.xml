@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="MyMenu" parent="android:Widget.TextView">
+        <item name="android:textSize" >25sp</item> //size desired.
+        <item name="android:textColor">#FFFFFF</item> //font color
+        <item name="android:background">#EF2525</item> //background
+    </style>
 </resources>

@@ -1,41 +1,27 @@
 package com.jithu.newone;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.provider.Settings;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.jithu.newone.adapter.ParseItemAdapter;
 import com.jithu.newone.model.ParseItemModel;
 
@@ -47,7 +33,9 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+
+public class home extends Fragment {
+
     private static final String TAG = "Tagggg";
     private RecyclerView recyclerView;
     private ParseItemAdapter parseItemAdapter;
@@ -59,68 +47,31 @@ public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     String latitude, longitude;
     private static final int REQUEST_LOCATION = 1;
-    private Toolbar toolbar;
-    private NavigationView navigationview;
-    FrameLayout framelayout;
-    private DrawerLayout drawerlayout;
-    private ActionBarDrawerToggle actiontoggle;
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        toolbar=findViewById(R.id.toolbar);
-        navigationview=findViewById(R.id.navigation_view);
-        framelayout=findViewById(R.id.frame);
-        drawerlayout=findViewById(R.id.drawer);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-
-        actiontoggle = new ActionBarDrawerToggle(this, drawerlayout, R.string.open_drawer, R.string.close_drawer){
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
-       // drawerlayout.setDrawerListener(actiontoggle);
-        drawerlayout.addDrawerListener(actiontoggle);
-        actiontoggle.syncState();
-
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-      //  getActionBar().setHomeButtonEnabled(true);
-
-
-        actiontoggle = new ActionBarDrawerToggle(this, drawerlayout, R.string.open_drawer, R.string.close_drawer);
-        drawerlayout.addDrawerListener(actiontoggle);
-        actiontoggle.syncState();
-        navigationview.setNavigationItemSelectedListener(this::onOptionsItemSelected);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view= inflater.inflate(R.layout.fragment_home, container, false);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             OnGPS();
         } else {
             getLocation();
-            recyclerView = findViewById(R.id.recyclerView_id);
-            parseItemAdapter = new ParseItemAdapter((ArrayList<ParseItemModel>) parseItemModelList, this);
+            recyclerView = view.findViewById(R.id.recyclerView_id);
+            parseItemAdapter = new ParseItemAdapter((ArrayList<ParseItemModel>) parseItemModelList, getActivity().getApplicationContext());
             recyclerView.setAdapter(parseItemAdapter);
 
             Content content= new Content();
             content.execute();
         }
-
-
+        return view;
     }
-    //
+
+
+
     private void OnGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext());
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -137,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(
-                MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
             System.out.println("1");
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -157,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 System.out.println("4");
-                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -210,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     Log.i(TAG, "dir: " + dir);
-                    System.out.println(s);
                     ParseItemModel temp = new ParseItemModel(name, rating, status,dir);
                     parseItemModelList.add(temp);
                 }
@@ -222,31 +172,4 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        framelayout=findViewById(R.id.frame);
-        Fragment selectedfrageme=null;
-        if(actiontoggle.onOptionsItemSelected(item)){
-            return true;
-        }
-
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.about:
-                selectedfrageme=new about_1();
-
-                break;
-            case R.id.home:
-                selectedfrageme=new home();
-
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame,
-                selectedfrageme).commit();
-        drawerlayout.closeDrawers();
-        return true;
-    }
-
-
-
 }

@@ -3,9 +3,16 @@
     <item
         android:title="@string/home"
         android:id="@+id/home"
-        android:icon="@drawable/ic_action_name"/>
+        
+
+        />
     <item android:id="@+id/about"
         android:title="@string/about"
-        android:icon="@drawable/ic_action_info"/>
+        />
+    <item android:id="@+id/report"
+        android:title="Report a bug"
+        />
+    <item android:id="@+id/contact"
+        android:title="Contact us"/>
 
 </menu>
