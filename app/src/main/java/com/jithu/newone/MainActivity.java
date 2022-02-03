@@ -29,9 +29,11 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationview;
     FrameLayout framelayout;
     private DrawerLayout drawerlayout;
+
     private ActionBarDrawerToggle actiontoggle;
 
 
@@ -74,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
         navigationview=findViewById(R.id.navigation_view);
         framelayout=findViewById(R.id.frame);
         drawerlayout=findViewById(R.id.drawer);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);

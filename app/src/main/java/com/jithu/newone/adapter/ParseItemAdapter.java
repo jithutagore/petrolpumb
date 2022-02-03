@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,7 +55,18 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 view.getContext().startActivity(intent);
             }
-        }); }
+        });
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String u = "http://www.google.com" + parseItemModel.getDirection();
+                Uri uri = Uri.parse(u);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                view.getContext().startActivity(intent);
+            }
+        });
+    }
+
 
     @Override
     public int getItemCount() {
@@ -63,11 +75,13 @@ public class ParseItemAdapter extends RecyclerView.Adapter<ParseItemAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name,rating,close,direction;
+        ImageButton imageButton;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
             rating=itemView.findViewById(R.id.rate_value);
             close=itemView.findViewById(R.id.close);
+            imageButton=itemView.findViewById(R.id.dirbuttion);
             direction=itemView.findViewById(R.id.direction);
 
         }

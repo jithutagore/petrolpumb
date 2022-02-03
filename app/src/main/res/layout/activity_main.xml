@@ -28,12 +28,36 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/frame">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_id"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:focusableInTouchMode="true"/>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Here's yours nearest \n  fuel station"
+                    android:layout_marginTop="74dp"
+                    android:gravity="center"
+                    android:id="@+id/near"
+                    android:layout_marginLeft="73dp"
+                    android:layout_marginRight="73dp"
+                    android:textColor="#FF0606"
+                    android:textSize="24sp"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:focusableInTouchMode="true"/>
+
+            </LinearLayout>
+
+
+
+
+
+
 
         </FrameLayout>
 
@@ -42,8 +66,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:menu="@menu/menu"
-
+app:itemTextColor="@color/white"
+        app:itemShapeFillColor="#EF2525"
         android:background="#E73232"
+        app:itemIconSize="24sp"
         android:id="@+id/navigation_view"
         app:headerLayout="@layout/drawer_header"
         android:layout_gravity="start"

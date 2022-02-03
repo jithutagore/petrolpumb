@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#F6F3F3"/>
+    <solid android:color="#EF2525"/>
     <stroke
-        android:color="#F6F3F3"
+        android:color="#EF2525"
         android:width="02dp"
         />
     <corners android:radius="10dp"/>

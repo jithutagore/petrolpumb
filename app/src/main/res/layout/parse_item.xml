@@ -9,52 +9,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Titleshsssssssssssssssssssssssssssssssssssssssssssssssssss"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
         android:textSize="20sp"
         android:id="@+id/name"
        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
        >
+
         <TextView
+            android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:text="Rating:"
-            android:id="@+id/rating"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4/5"
             android:id="@+id/rate_value"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/rating"
             />
 
-    </RelativeLayout>
-
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="open/close"
-        android:textColor="@color/black"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/rating"
+        android:paddingTop="10dp"
+        android:textColor="@color/white"
         android:textSize="18sp"
+        android:paddingBottom="10dp"
         android:id="@+id/close"
-       />
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="direction"
         android:textSize="18sp"
+        android:layout_below="@+id/rating"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:id="@+id/direction"
-        android:textColor="@color/black"
+        android:paddingRight="10dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
         android:layout_gravity="right"/>
+        <ImageButton
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+  android:id="@+id/dirbuttion"
+            android:src="@drawable/direction"
+            android:layout_marginRight="10dp"/>
+
+</RelativeLayout>
+
 
 
 
