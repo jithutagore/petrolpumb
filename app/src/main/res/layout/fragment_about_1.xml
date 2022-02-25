@@ -5,16 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".about_1"
     android:orientation="vertical"
-    android:background="#EFC6C6">
+    android:background="#FFFFFF">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"
-        android:text="The  App was created and designed to get the nearest fuel pump"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="165dp"
+android:gravity="center"
+        android:textColor="#FF0606"
+        android:layout_height="wrap_content"
+        android:text="The  App was created and designed to get the nearest fuel pump\n\nv1.0"
         android:textSize="40sp"
         />
 

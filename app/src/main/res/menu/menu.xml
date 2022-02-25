@@ -3,7 +3,7 @@
     <item
         android:title="@string/home"
         android:id="@+id/home"
-        
+
 
         />
     <item android:id="@+id/about"
@@ -12,7 +12,7 @@
     <item android:id="@+id/report"
         android:title="Report a bug"
         />
-    <item android:id="@+id/contact"
+    <item android:id="@+id/con"
         android:title="Contact us"/>
 
 </menu>

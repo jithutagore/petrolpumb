@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer"
     tools:context=".MainActivity">
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/coordinator"
+        >
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,8 +26,9 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="44dp"
             android:id="@+id/frame">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +63,7 @@
 
         </FrameLayout>
 
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -21,6 +21,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+
+
         actiontoggle = new ActionBarDrawerToggle(this, drawerlayout, R.string.open_drawer, R.string.close_drawer){
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
-            System.out.println("1");
+            System.out.println("2");
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             System.out.println("2");
             if (locationGPS != null) {
@@ -158,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
 
                 longitude = Double.toString(longi);
                 System.out.println(latitude+"jithu"+longitude);
-                System.out.println("3");
+                System.out.println("4");
 
             } else {
-                System.out.println("4");
+                System.out.println("5");
                 Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -184,9 +187,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            try {
+            try {String url1;
                 String url="https://www.google.com/search?q=petrol+pump&tbm=lcl";
-                String url1="https://www.google.com/search?q=petrol+pump+"+latitude+"+"+longitude+"&tbm=lcl";
+                if(latitude!=null){
+                     url1="https://www.google.com/search?q=petrol+pump+"+latitude+"+"+longitude+"&tbm=lcl";
+                }
+                else {
+                    url1="https://www.google.com/search?tbs=lf:1,lf_ui:3&tbm=lcl&sxsrf=APq-WBt1TqDhkvFjfOa-5Bemo9aDqWOwJA:1643892450897&q=petrol+pump+in+kollam&rflfq=1&num=10&sa=X&ved=2ahUKEwi8lNbMyOP1AhVX3jgGHVM3BpwQjGp6BAgCED4&biw=1536&bih=754&dpr=1.25#rlfi=hd:;si:;mv:[[8.8993087,76.6304001],[8.8740196,76.5612125]];tbs:lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u16!2m2!16m1!1e1!1m4!1u16!2m2!16m1!1e2!2m1!1e16!2m1!1e3!3sIAE,lf:1,lf_ui:3";
+                }
+
                 System.out.println(url1);
                 document= Jsoup.connect(url).get();
                 document1= Jsoup.connect(url1).get();
@@ -235,20 +244,35 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        int id = item.getItemId();
 
-        switch (id){
+
+        switch (item.getItemId()){
+
             case R.id.about:
-                selectedfrageme=new about_1();
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame,
+                        new about_1()).commit();
+                drawerlayout.closeDrawers();
                 break;
             case R.id.home:
-                selectedfrageme=new home();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame,
+                        new home()).commit();
+                drawerlayout.closeDrawers();
+                break;
+            case R.id.con:
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","jithutagore3@gmail.com", null));
+
+                startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+                break;
+            case R.id.report:
+                Intent intent1 = new Intent(Intent.ACTION_SENDTO,Uri.fromParts("mailto","jithutagore3@gmail.com",null));
+                startActivity(Intent.createChooser(intent1,"Choose an email client"));
+                break;
+
 
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame,
-                selectedfrageme).commit();
-        drawerlayout.closeDrawers();
+
+
         return true;
     }
 

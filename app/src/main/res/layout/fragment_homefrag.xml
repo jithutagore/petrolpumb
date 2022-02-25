@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homefrag"
+    android:id="@+id/homefrag"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="77dp"
+        android:text="Welcome,"
+        android:textColor="#FF0606"
+        android:textSize="24sp"/>
+    <TextView
+        android:layout_width="296dp"
+        android:layout_height="106dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginTop="213dp"
+        android:gravity="center"
+        android:layout_marginRight="40dp"
+        android:text="Please click the button\n to find your nearest fuel\n station"
+        android:textColor="#FF0606"
+        android:textSize="24sp"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="206dp"
+        android:layout_height="67dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginLeft="84dp"
+        android:background="#FF0606"
+        android:layout_marginTop="30dp"
+        android:text="Fuel Station"
+        android:id="@+id/fuelstation"
+        android:textColor="@color/white"
+        />
+
+
+
+</LinearLayout>
